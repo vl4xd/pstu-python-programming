@@ -3,10 +3,10 @@ import random
 
 class SumBullsCowsWrongs:
 
-    def __init__(self, bulls: int, cows: int, wrongs: int):
-        self.bulls = bulls
-        self.cows = cows
-        self.wrongs = wrongs
+    def __init__(self, bulls: int = -1, cows: int = -1, wrongs: int = -1):
+        self.bulls: int = bulls
+        self.cows: int = cows
+        self.wrongs: int = wrongs
 
     def __str__(self):
         return f"Bulls = {self.bulls}; Cows = {self.cows}; Wrongs = {self.wrongs}"
@@ -29,7 +29,7 @@ def GetRandomGoal(length: int) -> int:
     return goal
 
 
-def CountBullsAndCows(guess: int, goal: int) -> SumBullsCowsWrongs:
+def CountBullsAndCows(length: int, guess: int, goal: int) -> SumBullsCowsWrongs:
     """Count the number of bulls and cows in a guess compared to the goal."""
 
     try:
@@ -38,8 +38,8 @@ def CountBullsAndCows(guess: int, goal: int) -> SumBullsCowsWrongs:
     except ValueError:
         raise ValueError("Guess and goal must be integers.")
 
-    guess_str = str(guess)
-    goal_str = str(goal)
+    guess_str = AddPrefixZero(length, guess)
+    goal_str = AddPrefixZero(length, goal)
 
     len_guess = len(guess_str)
     len_goal = len(goal_str)
@@ -69,3 +69,7 @@ def IsGameFinished(sum_bulls_cows_wrons: SumBullsCowsWrongs) -> bool:
     if sum_bulls_cows_wrons.bulls == 0 and sum_bulls_cows_wrons.wrongs == 0:
         return True
     return False
+
+
+def AddPrefixZero(length: int, number: int) -> str:
+    return str(number).zfill(length)
