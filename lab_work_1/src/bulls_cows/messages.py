@@ -2,17 +2,6 @@ from abc import ABC, abstractmethod
 
 from bulls_cows.bulls_cows import AddPrefixZero
 
-
-class MsgCommon(ABC):
-
-    @abstractmethod
-    def IncorrectChoiсe(choiсe_input: str) -> str:
-        string = f"""
-Некорректный выбор ({choiсe_input})! Введите цифру - пункт меню, отмеченный в [.]."""
-
-        return string
-
-
 class MsgMainMenu(ABC):
 
     @abstractmethod
@@ -74,9 +63,9 @@ class MsgGame(ABC):
         return string
 
     @abstractmethod
-    def GuessAtempt() -> str:
+    def GuessAttempt() -> str:
         string = """
-Ваш вариант (Для выхода ввидете цифру 0): """
+Ваш вариант (для выхода ввидете цифру 0): """
 
         return string
 

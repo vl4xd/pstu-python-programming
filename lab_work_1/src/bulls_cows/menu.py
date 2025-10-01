@@ -1,5 +1,6 @@
-from bulls_cows.bulls_cows import SumBullsCowsWrongs, GetRandomGoal, CountBullsAndCows, IsGameFinished
-from bulls_cows.messages import MsgMainMenu, MsgDifficultyMenu, MsgCommon, MsgGame
+from bulls_cows.bulls_cows import SumBullsCowsWrongs, GetRandomGoal, CountBullsAndCows, IsGameFinished, AddPrefixZero
+from bulls_cows.messages import MsgMainMenu, MsgDifficultyMenu, MsgGame
+from common.common import MenuChoiсe
 
 def GetBullsCowsMainMenu() -> None:
 
@@ -7,7 +8,7 @@ def GetBullsCowsMainMenu() -> None:
     end = 3
 
     while True:
-        choice: int = _MenuChoiсe(start, end, MsgMainMenu.Welcome())
+        choice: int = MenuChoiсe(start, end, MsgMainMenu.Welcome())
         match choice:
             case 0:
                 return
@@ -25,7 +26,7 @@ def _GetDifficultyMenu():
     end = 3
 
     while True:
-        choice: int = _MenuChoiсe(start, end, MsgDifficultyMenu.SelectDifficulty())
+        choice: int = MenuChoiсe(start, end, MsgDifficultyMenu.SelectDifficulty())
         difficalty: int
         match choice:
             case 0:
@@ -48,7 +49,7 @@ def _GetRulesMenu():
     end = 0
 
     while True:
-        choice: int = _MenuChoiсe(start, end, MsgMainMenu.Rules())
+        choice: int = MenuChoiсe(start, end, MsgMainMenu.Rules())
         if choice == 0:
             return
 
@@ -57,9 +58,9 @@ def _GetGameMenu(length: int) -> bool:
 
     sum_bcw = SumBullsCowsWrongs()
     goal: int = GetRandomGoal(length)
-    print(goal)
+    print(f"*Подсказка - {AddPrefixZero(length, goal)}*")
     while not IsGameFinished(sum_bcw):
-        guess: int = _CheckUserGuess(length, MsgGame.GuessAtempt())
+        guess: int = _CheckUserGuess(length, MsgGame.GuessAttempt())
         if guess == 0:
             return False
         sum_bcw = CountBullsAndCows(length, guess, goal)
@@ -68,7 +69,7 @@ def _GetGameMenu(length: int) -> bool:
         print(MsgGame.StatAmongGuesses(sum_bcw.bulls, sum_bcw.cows, sum_bcw.wrongs))
     else:
         print(MsgGame.Congratulations(length, goal, 1))
-        choice: int = _MenuChoiсe(0, 1, MsgGame.Restart())
+        choice: int = MenuChoiсe(0, 1, MsgGame.Restart())
         if choice == 1:
             return True
         return False
@@ -86,15 +87,3 @@ def _CheckUserGuess(length: int, msg: object) -> int:
             return guess_int
         except ValueError:
             print(MsgGame.IncorrectGuess(length))
-
-
-def _MenuChoiсe(start: int, end: int, msg_menu: object) -> int:
-    while True:
-        choise_input: str = input(msg_menu)
-        try:
-            choise_int = int(choise_input)
-            if choise_int < start or choise_int > end:
-                raise ValueError
-            return choise_int
-        except ValueError:
-            print(MsgCommon.IncorrectChoiсe(choise_input))

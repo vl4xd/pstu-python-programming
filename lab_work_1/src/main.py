@@ -1,5 +1,4 @@
-
-from bulls_cows.menu import GetBullsCowsMainMenu
+from common.menu import GetMainMenu
 
 if __name__ == "__main__":
-    GetBullsCowsMainMenu()
+    GetMainMenu()
