@@ -3,6 +3,8 @@ from common.messages import MsgMainMenu
 from bulls_cows.menu import GetBullsCowsMainMenu
 from number_analyzer.menu import GetNumberAnalyzerMainMenu
 from wordle.menu import GetWordleMainMenu
+from rock_paper_scissors.menu import GetRockPaperScissorsMainMenu
+from text_statistics.menu import GetTextStatisticsMainMenu
 
 def GetMainMenu() -> None:
     start = 0
@@ -20,6 +22,6 @@ def GetMainMenu() -> None:
             case 3:
                 GetWordleMainMenu()
             case 4:
-                pass
+                GetRockPaperScissorsMainMenu()
             case 5:
-                pass
+                GetTextStatisticsMainMenu()

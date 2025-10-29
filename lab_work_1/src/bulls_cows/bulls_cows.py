@@ -22,14 +22,15 @@ def GetRandomGoal(length: int) -> int:
     digits = '0123456789'
     match length:
         case 3 | 4 | 5:
-            goal = int("".join(random.choices(digits, k=length)))
+            first_digit = "".join(random.choice(digits[1:])) # 0 не должен стоять на 1 месте
+            other_digits = "".join(random.choices(digits, k=length-1))
         case _:
             raise ValueError("Length must be 3, 4, or 5.")
 
-    return goal
+    return int(first_digit + other_digits)
 
 
-def CountBullsAndCows(length: int, guess: int, goal: int) -> SumBullsCowsWrongs:
+def CountBullsAndCows(guess: int, goal: int) -> SumBullsCowsWrongs:
     """Count the number of bulls and cows in a guess compared to the goal."""
 
     try:
@@ -38,8 +39,8 @@ def CountBullsAndCows(length: int, guess: int, goal: int) -> SumBullsCowsWrongs:
     except ValueError:
         raise ValueError("Guess and goal must be integers.")
 
-    guess_str = AddPrefixZero(length, guess)
-    goal_str = AddPrefixZero(length, goal)
+    guess_str = str(guess)
+    goal_str = str(goal)
 
     len_guess = len(guess_str)
     len_goal = len(goal_str)
@@ -69,7 +70,3 @@ def IsGameFinished(sum_bulls_cows_wrons: SumBullsCowsWrongs) -> bool:
     if sum_bulls_cows_wrons.bulls == 0 and sum_bulls_cows_wrons.wrongs == 0:
         return True
     return False
-
-
-def AddPrefixZero(length: int, number: int) -> str:
-    return str(number).zfill(length)

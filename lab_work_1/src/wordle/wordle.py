@@ -28,6 +28,7 @@ class Wordle:
         self.goal: str = random.choice(self.wordl_list_5).lower()
         self.max_attempts: int = 6
         self.count_attempts: int = 1
+        self.is_word_guessed: bool = False
         self.is_finished: bool = False
 
 
@@ -43,7 +44,10 @@ class Wordle:
 
         guess = guess.lower()
 
-        if guess == self.goal or self.max_attempts <= self.count_attempts:
+        if guess == self.goal:
+            self.is_finished = True
+            self.is_word_guessed = True
+        elif self.max_attempts <= self.count_attempts:
             self.is_finished = True
         else:
             self._AddAttempt()

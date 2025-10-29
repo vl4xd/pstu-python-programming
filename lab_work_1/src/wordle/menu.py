@@ -8,7 +8,7 @@ from common.common import MenuChoiсe
 def GetWordleMainMenu() -> None:
 
     start = 0
-    end = 3
+    end = 2
 
     while True:
         choice: int = MenuChoiсe(start, end, MsgMainMenu.Welcome())
@@ -21,8 +21,7 @@ def GetWordleMainMenu() -> None:
                         break
             case 2:
                 _GetRulesMenu()
-            case 3:
-                pass
+
 
 def _GetGameMenu() -> bool:
 
@@ -45,7 +44,11 @@ def _GetGameMenu() -> bool:
         if worlde.is_finished:
             continue
     else:
-        print(MsgGame.Congratulations(worlde.goal, worlde.count_attempts))
+        if worlde.is_word_guessed:
+            print(MsgGame.Congratulations(worlde.goal, worlde.count_attempts))
+        else:
+            print(MsgGame.Сondolence(worlde.goal, worlde.count_attempts))
+
         choice: int = MenuChoiсe(0, 1, MsgGame.Restart())
         if choice == 1:
             return True

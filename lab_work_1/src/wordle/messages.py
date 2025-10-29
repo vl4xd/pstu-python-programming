@@ -10,7 +10,6 @@ class MsgMainMenu(ABC):
 Меню:
 [1] - Начать игру
 [2] - Парвила
-[3] - Статистика
 
 [0] - Назад
 
@@ -71,6 +70,14 @@ class MsgGame(ABC):
 
         string = f"""
 Вы угадали слово '{goal}' за {count_attempts} попыток."""
+
+        return string
+
+    @abstractmethod
+    def Сondolence(goal: str, count_attempts: int) -> str:
+
+        string = f"""
+Вы НЕ угадали слово '{goal}' за {count_attempts} попыток."""
 
         return string
 

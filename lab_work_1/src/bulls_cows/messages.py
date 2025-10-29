@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from bulls_cows.bulls_cows import AddPrefixZero
+from bulls_cows.stats import get_common_stats_info
 
 class MsgMainMenu(ABC):
 
@@ -35,6 +35,17 @@ class MsgMainMenu(ABC):
 : """
         return string
 
+    @abstractmethod
+    def Stats(common_stats: dict[str:float]) -> str:
+        string = f"""
+                Статистика за сессию:
+
+{get_common_stats_info(common_stats)}
+[0] - Назад
+
+: """
+        return string
+
 
 class MsgDifficultyMenu(ABC):
 
@@ -56,9 +67,9 @@ class MsgGame(ABC):
 
 
     @abstractmethod
-    def IncorrectGuess(length: int) -> str:
+    def IncorrectGuess(length: int, guess: int) -> str:
         string = f"""
-Некорретный ввод! Ваш вариант должна быть ЦЕЛЫМ ПОЛОЖИТЕЛЬНЫМ числом с {length} знаками."""
+Некорретный ввод! Ваш вариант должен быть ЦЕЛЫМ ПОЛОЖИТЕЛЬНЫМ числом с {length} знаками (Ваш вариант: {guess})."""
 
         return string
 
@@ -72,14 +83,14 @@ class MsgGame(ABC):
     @abstractmethod
     def StatAmongGuesses(bulls: int, cows: int, wrongs: int) -> str:
         string = f"""
-Найдено {bulls} быков, {cows} коров и {wrongs} цифр нет в числе."""
+Найдено {bulls} быков, {cows} коров и {wrongs} цифр(ы) нет в числе."""
 
         return string
 
     @abstractmethod
     def Congratulations(length: int, goal: int, count_guesses) -> str:
 
-        goal_str = AddPrefixZero(length, goal)
+        goal_str = str(goal)
         string = f"""
 Вы угадали число {goal_str} за {count_guesses} попыток."""
 
