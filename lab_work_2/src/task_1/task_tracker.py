@@ -13,6 +13,7 @@ class TaskTracker:
 
 
     def complete_task(self, id: int):
+        
         try:
             self._tasks[id].complete()
         except KeyError:
@@ -29,8 +30,8 @@ class TaskTracker:
         return categories
 
 
-    def _str_sort_tag(self, reverse: bool):
-
+    def _str_sort_tag(self, reverse: bool) -> str:
+        
         if reverse:
             return "↓"
 
@@ -58,7 +59,7 @@ class TaskTracker:
         string_instance = f"Список задач (Категория {self._str_sort_tag(reverse)}):\n"
 
         def select_category(tasks_item: tuple[int, Task]):
-            return tasks_item[1]._categoty
+            return tasks_item[1]._category
 
         sorted_tasks = dict(sorted(self._tasks.items(), key=select_category, reverse=reverse))
 
@@ -81,7 +82,7 @@ class TaskTracker:
                 continue
             if task._is_done and not finished:
                 continue
-            if task._categoty == category:
+            if task._category == category:
                 string_instance += f"{id} - {task}\n"
 
         return string_instance
