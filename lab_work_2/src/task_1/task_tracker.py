@@ -13,7 +13,7 @@ class TaskTracker:
 
 
     def complete_task(self, id: int):
-        
+
         try:
             self._tasks[id].complete()
         except KeyError:
@@ -31,14 +31,14 @@ class TaskTracker:
 
 
     def _str_sort_tag(self, reverse: bool) -> str:
-        
+
         if reverse:
             return "↓"
 
         return "↑"
 
 
-    def str_sorted_by_date(self, reverse: bool = False, unfinished: bool = True, finished: bool = True):
+    def str_sorted_by_date(self, reverse: bool = False, unfinished: bool = True, finished: bool = True) -> str:
 
         string_instance = f"Список задач (Время {self._str_sort_tag(reverse)}):\n"
 
@@ -54,7 +54,7 @@ class TaskTracker:
         return string_instance
 
 
-    def str_sorted_by_category(self, reverse: bool = False, unfinished: bool = True, finished: bool = True):
+    def str_sorted_by_category(self, reverse: bool = False, unfinished: bool = True, finished: bool = True) -> str:
 
         string_instance = f"Список задач (Категория {self._str_sort_tag(reverse)}):\n"
 
@@ -73,7 +73,7 @@ class TaskTracker:
         return string_instance
 
 
-    def str_by_category(self, category: str, unfinished: bool = True, finished: bool = True):
+    def str_by_category(self, category: str, unfinished: bool = True, finished: bool = True) -> str:
 
         string_instance = f"Список задач (#{category}):\n"
 
@@ -86,3 +86,11 @@ class TaskTracker:
                 string_instance += f"{id} - {task}\n"
 
         return string_instance
+
+
+    def __str__(self):
+        return f"TaskTracker with {len(self._tasks)} tasks"
+
+
+    def __repr__(self):
+        return f"TaskTracker(id={self._id}, tasks={self._tasks})"

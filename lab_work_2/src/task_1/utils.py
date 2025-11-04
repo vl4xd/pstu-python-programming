@@ -9,12 +9,23 @@ TASKS_JSON_PATH = os.path.join(SCRIPT_DIR, 'tasks.json')
 
 
 def encode_to_json(task_tracker: TaskTracker, json_path: str) -> None:
-        encoded_instance: str = jsonpickle.encode(task_tracker)
-        with open(json_path, 'w+') as f:
-            f.write(encoded_instance)
+    """Encode TaskTracker instance to JSON file
+
+    :param TaskTracker task_tracker: task_tracker instance to encode
+    :param str json_path: path to JSON file
+    :return None:
+    """
+    encoded_instance: str = jsonpickle.encode(task_tracker)
+    with open(json_path, 'w+') as f:
+        f.write(encoded_instance)
 
 
 def decode_from_json(json_path: str) -> TaskTracker:
+    """Decode TaskTracker instance from JSON file
+
+    :param str json_path: path to JSON file with encoded TaskTracker instance
+    :return TaskTracker: decoded TaskTracker instance
+    """
     with open(json_path, 'r+') as f:
         written_instance: str = f.read()
         if len(written_instance) == 0:
@@ -22,7 +33,7 @@ def decode_from_json(json_path: str) -> TaskTracker:
         decoded_instance: TaskTracker = jsonpickle.decode(written_instance)
     return decoded_instance
 
-t = Task('fff', 'pstu')
+t = Task('aboba', 'pstu')
 t2 = Task('aefanelfk', 'school')
 t3 = Task('aefkan', 'home')
 t4 = Task('aefkan', 'pstu')
@@ -40,3 +51,6 @@ print(tt.str_sorted_by_category())
 print(tt.str_sorted_by_category(True, unfinished=True, finished=False))
 print(tt.str_by_category('pstu'))
 print(tt.str_by_category('pstu', finished=False))
+
+print(repr(tt))
+print(tt)

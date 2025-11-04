@@ -1,5 +1,5 @@
 from enum import Enum
 
-class TasnactionType(Enum):
-    income = 0
-    expense = 1
+class TransactionType(Enum):
+    income = 1
+    expense = 2

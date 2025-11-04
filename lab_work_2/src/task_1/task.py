@@ -2,7 +2,7 @@ from datetime import datetime
 
 class Task:
 
-    def __init__(self, description: str, category: str):
+    def __init__(self, description: str, category: str) -> None:
         """Task initialisation
 
         :param str description: task description
@@ -63,16 +63,20 @@ class Task:
         self._finished_at = datetime.now()
 
 
-    def _str_done_tag(self, is_done: bool) -> str:
+    def __str_done_tag(self) -> str:
         """Display the task flag
 
         :param bool is_done: new completion status
         :return str: task flag
         """
-        if is_done:
+        if self._is_done:
             return "[X]"
         return "[ ]"
 
 
-    def __str__(self):
-        return f"{self._str_done_tag(self._is_done)} {self._description} #{self._categoty}"
+    def __str__(self) -> str:
+        return f"{self.__str_done_tag()} {self._description} #{self._category}"
+
+
+    def __repr__(self) -> None:
+        return f"Task(description={self._description}, category={self._category}, is_done={self._is_done}, created_at={self._created_at}, finished_at={self._finished_at})"
