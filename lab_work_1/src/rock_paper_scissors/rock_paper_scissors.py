@@ -9,7 +9,7 @@ GAME_UNITS: dict[int:str] = {
     5: 'Спок'
 }
 
-def IsLeftBeatsRight(left: int, right: int) -> tuple[bool, str]:
+def is_left_beats_right(left: int, right: int) -> tuple[bool, str]:
     win_status: bool
     msg: str
     match (left, right):
@@ -33,27 +33,27 @@ def IsLeftBeatsRight(left: int, right: int) -> tuple[bool, str]:
 
     return win_status, msg
 
-def IsGameFinished(win_rate: int, player_wins: int, computer_wins: int) -> bool:
+def is_game_finished(win_rate: int, player_wins: int, computer_wins: int) -> bool:
     win_condition: int = (win_rate // 2) + 1
     if player_wins >= win_condition or computer_wins >= win_condition:
         return True
     return False
 
 
-def GetRandomGameUnit() -> int:
+def get_random_game_unit() -> int:
     random_unit: int = random.randint(1, 5)
     return random_unit
 
 
-def GetGameUnitName(unit_key: int) -> str:
+def get_game_unit_name(unit_key: int) -> str:
     return GAME_UNITS[unit_key]
 
 
-def GetListKeysGameUnits() -> list[int]:
+def get_list_keys_game_units() -> list[int]:
     return list(GAME_UNITS.keys())
 
 
-def GetStringGameUnits() -> str:
+def get_string_game_units() -> str:
     string = ''
     for key, value in GAME_UNITS.items():
         string += f'[{key}] - {value}\n'

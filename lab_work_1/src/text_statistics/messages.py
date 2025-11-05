@@ -1,4 +1,4 @@
-def Welcome() -> str:
+def welcome() -> str:
     string = """
 'Статистика текста'
 
@@ -11,7 +11,7 @@ def Welcome() -> str:
     return string
 
 
-def AnalysisResult(count_symbols: tuple[int, int],
+def analysis_result(count_symbols: tuple[int, int],
                    count_average_words: tuple[int,float],
                    top_count_words: list[tuple[str, list[int]]],
                    top_length_words: list[tuple[str, list[int]]]) -> str:
@@ -33,7 +33,7 @@ def AnalysisResult(count_symbols: tuple[int, int],
 
     return string
 
-def Restart() -> str:
+def restart() -> str:
     string = """
 Хотите проанализировать текст еще?
 [1] - Да
@@ -43,8 +43,7 @@ def Restart() -> str:
     return string
 
 
-def IncoretInput(lenght: int) -> str:
+def incoret_input(lenght: int) -> str:
     string = f"""
-Текст должен содежрать не менее 100 символов, у Вас сейчас {lenght} символов (для выхода введите - 0).
-"""
+Некорректный ввод! Текст должен содежрать не менее 100 символов, у Вас сейчас {lenght} символов."""
     return string

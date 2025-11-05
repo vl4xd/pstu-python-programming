@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
-from rock_paper_scissors.rock_paper_scissors import GetStringGameUnits
+from rock_paper_scissors.rock_paper_scissors import get_string_game_units
 
 class MsgMainMenu(ABC):
 
     @abstractmethod
-    def Welcome() -> str:
+    def welcome() -> str:
         string = """
 'Камень-Ножницы-Бумага-Ящерица-Спок'
 
@@ -19,7 +19,7 @@ class MsgMainMenu(ABC):
         return string
 
     @abstractmethod
-    def Rules() -> str:
+    def rules() -> str:
         string = """
                 Правила:
 
@@ -45,7 +45,7 @@ class MsgMainMenu(ABC):
 class MsgWinRateMenu(ABC):
 
     @abstractmethod
-    def SelectWinRate() -> str:
+    def select_win_rate() -> str:
         string = """
 Введите желаемое количество побед от [1] до [10]
 
@@ -59,7 +59,7 @@ class MsgGame(ABC):
 
 
     @abstractmethod
-    def IncorrectGuess() -> str:
+    def incorrect_guess() -> str:
         string = """
 Некорретный ввод! Выберите пункт, отмеченный в [.]"""
 
@@ -67,7 +67,7 @@ class MsgGame(ABC):
 
 
     @abstractmethod
-    def StatAmongGuesses(player_wins: int, computer_wins: int, is_plaer_win: bool, is_draw: bool) -> str:
+    def stat_among_guesses(player_wins: int, computer_wins: int, is_plaer_win: bool, is_draw: bool) -> str:
         who_win: str
         if is_draw:
             who_win = "Ничья!"
@@ -83,7 +83,7 @@ class MsgGame(ABC):
         return string
 
     @abstractmethod
-    def Congratulations(player_wins: int, computer_wins: int) -> str:
+    def congratulations(player_wins: int, computer_wins: int) -> str:
         who_win: str
         if player_wins == computer_wins:
             who_win = "В этой игре ничья!"
@@ -101,16 +101,16 @@ class MsgGame(ABC):
 
 
     @abstractmethod
-    def GuessAttempt(count_moves: int) -> str:
+    def guess_attempt(count_moves: int) -> str:
         string = f"""
 Ход №{count_moves}. Выберите один из вариантов:
-{GetStringGameUnits()}
+{get_string_game_units()}
 Ваш вариант (для выхода введите цифру 0): """
 
         return string
 
     @abstractmethod
-    def Restart() -> str:
+    def restart() -> str:
         string = """
 Хотите сыграть еще?
 [1] - Да

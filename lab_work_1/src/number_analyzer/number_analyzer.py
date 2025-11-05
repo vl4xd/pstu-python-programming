@@ -1,4 +1,4 @@
-def FindDivisors(n: int) -> list[int]:
+def find_divisors(n: int) -> list[int]:
     """Находит все делители числа n оптимизированным способом"""
 
     try:
@@ -23,20 +23,20 @@ def FindDivisors(n: int) -> list[int]:
     return sorted(divisors)
 
 
-def IsNumberSimple(divisors: list[int]) -> bool:
+def is_number_simple(divisors: list[int]) -> bool:
     if len(divisors) == 2:
         return True
     return False
 
 
-def IsNumberPerfect(number: int, divisors: list[int]) -> bool:
+def is_number_perfect(number: int, divisors: list[int]) -> bool:
     check_number = sum(divisors) - number
     if number == check_number:
         return True
     return False
 
 
-def GetStringSumDivisors(divisors: list[int]) -> str:
+def get_string_sum_divisors(divisors: list[int]) -> str:
     divisors.pop()
     string = "+".join(map(str, divisors))
     sum_divisors = sum(divisors)

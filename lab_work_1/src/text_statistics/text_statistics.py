@@ -1,16 +1,16 @@
-def GetTextFromFile(file_path: str) -> str:
+def get_text_from_file(file_path: str) -> str:
     with open(file_path, 'r', encoding='utf-8') as file:
         text: str = file.read()
     return text
 
 
-def GetCountSymbols(text: str) -> tuple[int, int]:
+def get_count_symbols(text: str) -> tuple[int, int]:
     symbols_with_spaces: int = len(text)
     symbols_without_spaces: int = len(text.replace(" ", "").replace("\n", ""))
     return symbols_with_spaces, symbols_without_spaces
 
 
-def GetWordFormDict(text: str) -> dict[str, list[int]]:
+def get_word_form_dict(text: str) -> dict[str, list[int]]:
     word_form_dict: dict[str, list[int]] = {}
     word: str = ''
     for symbol in text:
@@ -30,7 +30,7 @@ def GetWordFormDict(text: str) -> dict[str, list[int]]:
     return word_form_dict
 
 
-def GetTopCountWords(word_form_dict: dict[str, list[int]], top_count: int) -> list[tuple[str, list[int]]]:
+def get_top_count_words(word_form_dict: dict[str, list[int]], top_count: int) -> list[tuple[str, list[int]]]:
     sorted_word_forms: list[tuple[str, list[int]]] = sorted(
         word_form_dict.items(),
         key=lambda item: item[1][0],
@@ -39,7 +39,7 @@ def GetTopCountWords(word_form_dict: dict[str, list[int]], top_count: int) -> li
     return sorted_word_forms[:top_count]
 
 
-def GetTopLengthWords(word_form_dict: dict[str, list[int]], top_count: int) -> list[tuple[str, list[int]]]:
+def get_top_length_words(word_form_dict: dict[str, list[int]], top_count: int) -> list[tuple[str, list[int]]]:
     sorted_word_forms: list[tuple[str, list[int]]] = sorted(
         word_form_dict.items(),
         key=lambda item: item[1][1],
@@ -48,7 +48,7 @@ def GetTopLengthWords(word_form_dict: dict[str, list[int]], top_count: int) -> l
     return sorted_word_forms[:top_count]
 
 
-def GetAverageWordLength(word_form_dict: dict[str, list[int]]) -> tuple[int, float]:
+def get_average_word_length(word_form_dict: dict[str, list[int]]) -> tuple[int, float]:
     total_length: int = sum(length * count for count, length in word_form_dict.values())
     total_count: int = sum(count for count, length in word_form_dict.values())
     if total_count == 0:

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class MsgMainMenu(ABC):
 
     @abstractmethod
-    def Welcome() -> str:
+    def welcome() -> str:
         string = """
 'Wordle/5 букв'
 
@@ -17,7 +17,7 @@ class MsgMainMenu(ABC):
         return string
 
     @abstractmethod
-    def Rules() -> str:
+    def rules() -> str:
         string = """
                 Правила:
 
@@ -38,35 +38,35 @@ class MsgGame(ABC):
 
 
     @abstractmethod
-    def IncorrectGuess(length: int) -> str:
+    def incorrect_guess(length: int) -> str:
         string = f"""
 Некорретный ввод! Ваш вариант должнен быть знакомым нам словом с {length} буквами."""
 
         return string
 
     @abstractmethod
-    def StartGame() -> str:
+    def start_game() -> str:
         string = """
 Закадано слово из 5 букв. У Вас 6 попыток."""
 
         return string
 
     @abstractmethod
-    def GuessAttempt(count_attempts: int) -> str:
+    def guess_attempt(count_attempts: int) -> str:
         string = f"""
 Попытка {count_attempts} (для выхода ввидете цифру 0): """
 
         return string
 
     @abstractmethod
-    def StatAmongGuesses(guess: str) -> str:
+    def stat_among_guesses(guess: str) -> str:
         string = f"""
 Результат: {guess}"""
 
         return string
 
     @abstractmethod
-    def Congratulations(goal: str, count_attempts: int) -> str:
+    def congratulations(goal: str, count_attempts: int) -> str:
 
         string = f"""
 Вы угадали слово '{goal}' за {count_attempts} попыток."""
@@ -74,7 +74,7 @@ class MsgGame(ABC):
         return string
 
     @abstractmethod
-    def Сondolence(goal: str, count_attempts: int) -> str:
+    def failure(goal: str, count_attempts: int) -> str:
 
         string = f"""
 Вы НЕ угадали слово '{goal}' за {count_attempts} попыток."""
@@ -82,7 +82,7 @@ class MsgGame(ABC):
         return string
 
     @abstractmethod
-    def Restart() -> str:
+    def restart() -> str:
         string = """
 Хотите сыграть еще?
 [1] - Да

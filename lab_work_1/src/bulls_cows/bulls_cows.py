@@ -12,7 +12,7 @@ class SumBullsCowsWrongs:
         return f"Bulls = {self.bulls}; Cows = {self.cows}; Wrongs = {self.wrongs}"
 
 
-def GetRandomGoal(length: int) -> int:
+def get_random_goal(length: int) -> int:
     """Generates a random number with digits of specified length."""
     try:
         length = int(length)
@@ -30,7 +30,7 @@ def GetRandomGoal(length: int) -> int:
     return int(first_digit + other_digits)
 
 
-def CountBullsAndCows(guess: int, goal: int) -> SumBullsCowsWrongs:
+def count_bulls_and_cows(guess: int, goal: int) -> SumBullsCowsWrongs:
     """Count the number of bulls and cows in a guess compared to the goal."""
 
     try:
@@ -65,7 +65,7 @@ def CountBullsAndCows(guess: int, goal: int) -> SumBullsCowsWrongs:
     return SumBullsCowsWrongs(bulls_sum, cows_sum, wrongs_sum)
 
 
-def IsGameFinished(sum_bulls_cows_wrons: SumBullsCowsWrongs) -> bool:
+def is_game_finished(sum_bulls_cows_wrons: SumBullsCowsWrongs) -> bool:
 
     if sum_bulls_cows_wrons.bulls == 0 and sum_bulls_cows_wrons.wrongs == 0:
         return True

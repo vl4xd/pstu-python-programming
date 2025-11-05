@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
-from number_analyzer.number_analyzer import IsNumberSimple, IsNumberPerfect, GetStringSumDivisors
+from number_analyzer.number_analyzer import is_number_simple, is_number_perfect, get_string_sum_divisors
 
 class MsgMainMenu(ABC):
 
     @abstractmethod
-    def Welcome() -> str:
+    def welcome() -> str:
         string = """
 'Анализатор чисел'
 
@@ -19,7 +19,7 @@ class MsgMainMenu(ABC):
         return string
 
     @abstractmethod
-    def About() -> str:
+    def about() -> str:
         string = """
                 Об анализаторе:
 
@@ -38,39 +38,39 @@ class MsgAnalyzer(ABC):
 
 
     @abstractmethod
-    def IncorrectNumber() -> str:
+    def incorrect_number() -> str:
         string = """
 Некорретный ввод! Число должно быть ЦЕЛЫМ ПОЛОЖИТЕЛЬНЫМ."""
 
         return string
 
     @abstractmethod
-    def NumberAttempt() -> str:
+    def number_attempt() -> str:
         string = """
 Ваше число (для выхода ввидете цифру 0): """
 
         return string
 
     @abstractmethod
-    def AnalyzedNumber(number: int, divisors: list[int]) -> str:
+    def analyzed_number(number: int, divisors: list[int]) -> str:
         string = """
 """
         string += f"Делители числа {number}: {divisors}\n"
 
-        if IsNumberSimple(divisors):
+        if is_number_simple(divisors):
             string += f"Число {number} является ПРОСТЫМ\n"
         else:
             string += f"Число {number} НЕ является ПРОСТЫМ\n"
 
-        if IsNumberPerfect(number, divisors):
-            string += f"Число {number} является СОВЕРШЕННЫМ: ({GetStringSumDivisors(divisors)})"
+        if is_number_perfect(number, divisors):
+            string += f"Число {number} является СОВЕРШЕННЫМ: ({get_string_sum_divisors(divisors)})"
         else:
-            string += f"Число {number} НЕ является СОВЕРШЕННЫМ: ({GetStringSumDivisors(divisors)})"
+            string += f"Число {number} НЕ является СОВЕРШЕННЫМ: ({get_string_sum_divisors(divisors)})"
 
         return string
 
     @abstractmethod
-    def Restart() -> str:
+    def restart() -> str:
         string = """
 Хотите проанализировать еще число?
 [1] - Да

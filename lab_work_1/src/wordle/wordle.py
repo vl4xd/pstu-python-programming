@@ -32,11 +32,11 @@ class Wordle:
         self.is_finished: bool = False
 
 
-    def _AddAttempt(self) -> None:
+    def _add_attempt(self) -> None:
             self.count_attempts += 1
 
 
-    def CheckWord(self, guess: str) -> str:
+    def check_word(self, guess: str) -> str:
         len_guess: int = len(guess)
         len_goal: int = len(self.goal)
         if len_guess!= len_goal:
@@ -50,7 +50,7 @@ class Wordle:
         elif self.max_attempts <= self.count_attempts:
             self.is_finished = True
         else:
-            self._AddAttempt()
+            self._add_attempt()
 
         goal_letters_list: list[str] = list(self.goal)
         guess_letters_list: list[str] = list(guess)
@@ -72,7 +72,3 @@ class Wordle:
             guess_check_list[i] = True
 
         return " ".join(guess_letters_list)
-
-
-    def __str__(self):
-        pass

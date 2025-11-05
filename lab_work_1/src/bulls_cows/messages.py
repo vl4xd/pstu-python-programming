@@ -5,7 +5,7 @@ from bulls_cows.stats import get_common_stats_info
 class MsgMainMenu(ABC):
 
     @abstractmethod
-    def Welcome() -> str:
+    def welcome() -> str:
         string = """
 'Быки и Коровы'
 
@@ -20,7 +20,7 @@ class MsgMainMenu(ABC):
         return string
 
     @abstractmethod
-    def Rules() -> str:
+    def rules() -> str:
         string = """
                 Правила:
 
@@ -36,7 +36,7 @@ class MsgMainMenu(ABC):
         return string
 
     @abstractmethod
-    def Stats(common_stats: dict[str:float]) -> str:
+    def stats(common_stats: dict[str:float]) -> str:
         string = f"""
                 Статистика за сессию:
 
@@ -50,7 +50,7 @@ class MsgMainMenu(ABC):
 class MsgDifficultyMenu(ABC):
 
     @abstractmethod
-    def SelectDifficulty() -> str:
+    def select_difficulty() -> str:
         string = """
 Выберите сложность:
 [1] - Легко (3 цифры)
@@ -67,28 +67,28 @@ class MsgGame(ABC):
 
 
     @abstractmethod
-    def IncorrectGuess(length: int, guess: int) -> str:
+    def incorrect_guess(length: int, guess: int) -> str:
         string = f"""
-Некорретный ввод! Ваш вариант должен быть ЦЕЛЫМ ПОЛОЖИТЕЛЬНЫМ числом с {length} знаками (Ваш вариант: {guess})."""
+Некорректный ввод! Ваш вариант должен быть ЦЕЛЫМ ПОЛОЖИТЕЛЬНЫМ числом с {length} знаками (Ваш вариант: {guess})."""
 
         return string
 
     @abstractmethod
-    def GuessAttempt() -> str:
+    def guess_attempt() -> str:
         string = """
 Ваш вариант (для выхода ввидете цифру 0): """
 
         return string
 
     @abstractmethod
-    def StatAmongGuesses(bulls: int, cows: int, wrongs: int) -> str:
+    def stat_among_guesses(bulls: int, cows: int, wrongs: int) -> str:
         string = f"""
 Найдено {bulls} быков, {cows} коров и {wrongs} цифр(ы) нет в числе."""
 
         return string
 
     @abstractmethod
-    def Congratulations(length: int, goal: int, count_guesses) -> str:
+    def congratulations(length: int, goal: int, count_guesses) -> str:
 
         goal_str = str(goal)
         string = f"""
@@ -97,7 +97,7 @@ class MsgGame(ABC):
         return string
 
     @abstractmethod
-    def Restart() -> str:
+    def restart() -> str:
         string = """
 Хотите сыграть еще?
 [1] - Да

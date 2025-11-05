@@ -3,14 +3,14 @@ from abc import ABC, abstractmethod
 class MsgCommon(ABC):
 
     @abstractmethod
-    def IncorrectChoiсe(choiсe_input: str) -> str:
+    def incorrect_choiсe(choiсe_input: str) -> str:
         string = f"""
 Некорректный выбор ({choiсe_input})! Введите цифру - пункт меню, отмеченный в [.]."""
 
         return string
 
 
-def MenuChoiсe(start: int, end: int, msg_menu: object) -> int:
+def menu_choiсe(start: int, end: int, msg_menu: object) -> int:
     while True:
         choise_input: str = input(msg_menu)
         try:
@@ -19,4 +19,4 @@ def MenuChoiсe(start: int, end: int, msg_menu: object) -> int:
                 raise ValueError
             return choise_int
         except ValueError:
-            print(MsgCommon.IncorrectChoiсe(choise_input))
+            print(MsgCommon.incorrect_choiсe(choise_input))

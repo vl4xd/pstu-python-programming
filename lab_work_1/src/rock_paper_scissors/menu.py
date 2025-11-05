@@ -1,64 +1,64 @@
-from common.common import MenuChoiсe
+from common.common import menu_choiсe
 from rock_paper_scissors.messages import MsgMainMenu, MsgWinRateMenu, MsgGame
-from rock_paper_scissors.rock_paper_scissors import GetRandomGameUnit, IsLeftBeatsRight, GetListKeysGameUnits, GetGameUnitName, IsGameFinished
+from rock_paper_scissors.rock_paper_scissors import get_random_game_unit, is_left_beats_right, get_list_keys_game_units, get_game_unit_name, is_game_finished
 
-def GetRockPaperScissorsMainMenu() -> None:
+def get_rock_paper_scissors_main_menu() -> None:
 
     start = 0
     end = 2
 
     while True:
-        choice: int = MenuChoiсe(start, end, MsgMainMenu.Welcome())
+        choice: int = menu_choiсe(start, end, MsgMainMenu.welcome())
         match choice:
             case 0:
                 return
             case 1:
-                _GetWinRateMenu()
+                _get_win_rate_menu()
             case 2:
-                _GetRulesMenu()
+                _get_rules_menu()
 
 
-def _GetWinRateMenu():
+def _get_win_rate_menu():
 
     start = 0
     end = 10
 
     while True:
-        choice: int = MenuChoiсe(start, end, MsgWinRateMenu.SelectWinRate())
+        choice: int = menu_choiсe(start, end, MsgWinRateMenu.select_win_rate())
         if choice == 0:
             return
 
         while True:
-            if not _GetGameMenu(choice):
+            if not _get_game_menu(choice):
                 break
 
 
-def _GetRulesMenu():
+def _get_rules_menu():
 
     start = 0
     end = 0
 
     while True:
-        choice: int = MenuChoiсe(start, end, MsgMainMenu.Rules())
+        choice: int = menu_choiсe(start, end, MsgMainMenu.rules())
         if choice == 0:
             return
 
 
-def _GetGameMenu(win_rate: int) -> bool:
+def _get_game_menu(win_rate: int) -> bool:
 
     computer_wins: int = 0
     player_wins: int = 0
     count_moves: int = 0
 
-    while not IsGameFinished(win_rate, player_wins, computer_wins):
+    while not is_game_finished(win_rate, player_wins, computer_wins):
         count_moves += 1
         is_player_win: bool = False
         is_draw: bool = False
 
-        computer_choice: int = GetRandomGameUnit()
-        print(f"*Подсказка - {GetGameUnitName(computer_choice)}*")
+        computer_choice: int = get_random_game_unit()
+        print(f"*Подсказка - {get_game_unit_name(computer_choice)}*")
 
-        guess: int = _CheckUserGuess(MsgGame.GuessAttempt(count_moves))
+        guess: int = _check_user_guess(MsgGame.guess_attempt(count_moves))
         if guess == 0:
             return False
 
@@ -67,7 +67,7 @@ def _GetGameMenu(win_rate: int) -> bool:
             computer_wins += 1
             is_draw = True
         else:
-            win_status, msg_status = IsLeftBeatsRight(guess, computer_choice)
+            win_status, msg_status = is_left_beats_right(guess, computer_choice)
             print(msg_status)
             if win_status:
                 player_wins += 1
@@ -75,27 +75,27 @@ def _GetGameMenu(win_rate: int) -> bool:
             else:
                 computer_wins += 1
 
-        if IsGameFinished(win_rate, player_wins, computer_wins):
+        if is_game_finished(win_rate, player_wins, computer_wins):
             continue
 
-        print(MsgGame.StatAmongGuesses(player_wins, computer_wins, is_player_win, is_draw))
+        print(MsgGame.stat_among_guesses(player_wins, computer_wins, is_player_win, is_draw))
     else:
-        print(MsgGame.Congratulations(player_wins, computer_wins))
-        choice: int = MenuChoiсe(0, 1, MsgGame.Restart())
+        print(MsgGame.congratulations(player_wins, computer_wins))
+        choice: int = menu_choiсe(0, 1, MsgGame.restart())
         if choice == 1:
             return True
         return False
 
 
-def _CheckUserGuess(msg: object) -> int:
+def _check_user_guess(msg: object) -> int:
     while True:
         guess_input: str = input(msg)
         try:
             guess_int = int(guess_input)
             if guess_int == 0:
                 return guess_int
-            if guess_int not in GetListKeysGameUnits():
+            if guess_int not in get_list_keys_game_units():
                 raise ValueError
             return guess_int
         except ValueError:
-            print(MsgGame.IncorrectGuess())
+            print(MsgGame.incorrect_guess())

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class MsgMainMenu(ABC):
 
     @abstractmethod
-    def Welcome() -> str:
+    def welcome() -> str:
         string = """
 'Лабораторная работа №1'
 

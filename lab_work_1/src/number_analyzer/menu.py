@@ -1,49 +1,50 @@
-from number_analyzer.number_analyzer import FindDivisors
+from number_analyzer.number_analyzer import find_divisors
 from number_analyzer.messages import MsgMainMenu, MsgAnalyzer
-from common.common import MenuChoiсe
+from common.common import menu_choiсe
 
-def GetNumberAnalyzerMainMenu() -> None:
+
+def get_number_analyzer_main_menu() -> None:
 
     start = 0
     end = 2
 
     while True:
-        choice: int = MenuChoiсe(start, end, MsgMainMenu.Welcome())
+        choice: int = menu_choiсe(start, end, MsgMainMenu.welcome())
         match choice:
             case 0:
                 return
             case 1:
-                _GetAnalyzerMenu()
+                _get_analyzer_menu()
             case 2:
-                _GetAboutMenu()
+                _get_about_menu()
 
 
-def _GetAnalyzerMenu() -> None:
+def _get_analyzer_menu() -> None:
 
     while True:
-        number: int = _CheckUserNumber(MsgAnalyzer.NumberAttempt())
+        number: int = _check_user_number(MsgAnalyzer.number_attempt())
         if number == 0:
             return
-        divisors = FindDivisors(number)
-        print(MsgAnalyzer.AnalyzedNumber(number, divisors))
+        divisors = find_divisors(number)
+        print(MsgAnalyzer.analyzed_number(number, divisors))
 
-        choice: int = MenuChoiсe(0, 1, MsgAnalyzer.Restart())
+        choice: int = menu_choiсe(0, 1, MsgAnalyzer.restart())
         if choice == 1:
             continue
         return
 
 
-def _GetAboutMenu() -> None:
+def _get_about_menu() -> None:
     start = 0
     end = 0
 
     while True:
-        choice: int = MenuChoiсe(start, end, MsgMainMenu.About())
+        choice: int = menu_choiсe(start, end, MsgMainMenu.about())
         if choice == 0:
             return
 
 
-def _CheckUserNumber(msg: object) -> int:
+def _check_user_number(msg: object) -> int:
     while True:
         number_input: str = input(msg)
         try:
@@ -54,4 +55,4 @@ def _CheckUserNumber(msg: object) -> int:
                 raise ValueError
             return number_input
         except ValueError:
-            print(MsgAnalyzer.IncorrectNumber())
+            print(MsgAnalyzer.incorrect_number())

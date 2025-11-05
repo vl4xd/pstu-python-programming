@@ -1,4 +1,4 @@
-from common.menu import GetMainMenu
+from common.menu import get_main_menu
 
 if __name__ == "__main__":
-    GetMainMenu()
+    get_main_menu()

@@ -1,27 +1,27 @@
-from common.common import MenuChoiсe
+from common.common import menu_choiсe
 from common.messages import MsgMainMenu
-from bulls_cows.menu import GetBullsCowsMainMenu
-from number_analyzer.menu import GetNumberAnalyzerMainMenu
-from wordle.menu import GetWordleMainMenu
-from rock_paper_scissors.menu import GetRockPaperScissorsMainMenu
-from text_statistics.menu import GetTextStatisticsMainMenu
+from bulls_cows.menu import get_bulls_cows_main_menu
+from number_analyzer.menu import get_number_analyzer_main_menu
+from wordle.menu import get_wordle_main_menu
+from rock_paper_scissors.menu import get_rock_paper_scissors_main_menu
+from text_statistics.menu import get_text_statistics_main_menu
 
-def GetMainMenu() -> None:
+def get_main_menu() -> None:
     start = 0
     end = 5
 
     while True:
-        choice: int = MenuChoiсe(start, end, MsgMainMenu.Welcome())
+        choice: int = menu_choiсe(start, end, MsgMainMenu.welcome())
         match choice:
             case 0:
                 return
             case 1:
-                GetBullsCowsMainMenu()
+                get_bulls_cows_main_menu()
             case 2:
-                GetNumberAnalyzerMainMenu()
+                get_number_analyzer_main_menu()
             case 3:
-                GetWordleMainMenu()
+                get_wordle_main_menu()
             case 4:
-                GetRockPaperScissorsMainMenu()
+                get_rock_paper_scissors_main_menu()
             case 5:
-                GetTextStatisticsMainMenu()
+                get_text_statistics_main_menu()
