@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
 class RobotManipulator:
     def __init__(self):
         self.joints = []
@@ -132,6 +133,8 @@ def visualize_manipulator(robot, title="3D Манипулятор"):
     # Вычисляем позиции всех точек для текущего и начального положений
     points_current = robot.forward_kinematics()
     points_initial = robot.forward_kinematics(robot.initial_joint_values)
+
+    print(points_current)
 
     # Создаем 3D график
     fig = plt.figure(figsize=(12, 10))
@@ -288,7 +291,7 @@ def interactive_example():
 
     # Пример конфигурации (можно менять)
     configurations = [
-        ('R', 'z', np.radians(0), 2.0),    # Начальное: 0°
+        ('R', 'z', np.radians(2), 2.0),    # Начальное: 0°
         ('R', 'y', np.radians(0), 0.8),    # Начальное: 0°
         ('P', 'x', 0, 10),                 # Начальное: 0 м
         ('R', 'x', np.radians(0), 0.4)     # Начальное: 0°

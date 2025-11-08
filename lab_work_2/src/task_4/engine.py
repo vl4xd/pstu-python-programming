@@ -2,7 +2,5 @@
 class Engine:
 
 
-    def __init__(self, power, speed, acceleration):
-        self.power = power
-        self.speed = speed
-        self.acceleration = acceleration
+    def __init__(self, speed: int) -> None:
+        self.speed: int = speed
