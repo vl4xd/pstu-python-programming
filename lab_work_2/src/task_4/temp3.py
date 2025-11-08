@@ -290,9 +290,14 @@ def interactive_example():
     robot = RobotManipulator()
 
     # Пример конфигурации (можно менять)
+    # configurations = [
+    #     ('R', 'z', np.radians(2), 2.0),    # Начальное: 0°
+    #     ('R', 'y', np.radians(0), 0.8),    # Начальное: 0°
+    #     ('P', 'x', 0, 10),                 # Начальное: 0 м
+    #     ('R', 'x', np.radians(0), 0.4)     # Начальное: 0°
+    # ]
+
     configurations = [
-        ('R', 'z', np.radians(2), 2.0),    # Начальное: 0°
-        ('R', 'y', np.radians(0), 0.8),    # Начальное: 0°
         ('P', 'x', 0, 10),                 # Начальное: 0 м
         ('R', 'x', np.radians(0), 0.4)     # Начальное: 0°
     ]
@@ -302,10 +307,8 @@ def interactive_example():
 
     # Устанавливаем новые значения
     new_values = [
-        np.radians(0),   # 45°
-        np.radians(0),   # 60°
-        -9.5,              # 0.3 м
-        np.radians(0)    # 30°
+        0,              # 0.3 м
+        np.radians(90)    # 30°
     ]
     robot.set_joint_values(new_values)
 

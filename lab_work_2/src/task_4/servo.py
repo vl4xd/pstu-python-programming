@@ -13,3 +13,52 @@ class Servo(Engine):
         self.rest_current: int = rest_current
         self.move_current: int = move_current
         self.current_current: int = rest_current
+
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Servo):
+            result = self.speed == other.speed and \
+                self.rest_current == other.rest_current and \
+                self.move_current == other.move_current
+            return result
+
+
+
+    def __ne__(self, other) -> bool:
+        if isinstance(other, Servo):
+            result = self.speed != other.speed and \
+                self.rest_current != other.rest_current and \
+                self.move_current != other.move_current
+            return result
+
+
+    def __lt__(self, other) -> bool:
+        if isinstance(other, Servo):
+            result = self.speed < other.speed and \
+                self.rest_current < other.rest_current and \
+                self.move_current < other.move_current
+            return result
+
+
+    def __gt__(self, other) -> bool:
+        if isinstance(other, Servo):
+            result = self.speed > other.speed and \
+                self.rest_current > other.rest_current and \
+                self.move_current > other.move_current
+            return result
+
+
+    def __le__(self, other) -> bool:
+        if isinstance(other, Servo):
+            result = self.speed <= other.speed and \
+                self.rest_current <= other.rest_current and \
+                self.move_current <= other.move_current
+            return result
+
+
+    def __ge__(self, other) -> bool:
+        if isinstance(other, Servo):
+            result = self.speed >= other.speed and \
+                self.rest_current >= other.rest_current and \
+                self.move_current >= other.move_current
+            return result

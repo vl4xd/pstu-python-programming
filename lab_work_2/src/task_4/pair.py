@@ -28,6 +28,73 @@ class Pair(Servo):
         pass
 
 
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Pair):
+            result = self.axis == other.axis and \
+                self.speed == other.speed and \
+                self.rest_current == other.rest_current and \
+                self.move_current == other.move_current and \
+                self.length == other.length and \
+                self.value == other.value
+            return result
+
+
+
+    def __ne__(self, other) -> bool:
+        if isinstance(other, Pair):
+            result = self.axis != other.axis and \
+                self.speed != other.speed and \
+                self.rest_current != other.rest_current and \
+                self.move_current != other.move_current and \
+                self.length != other.length and \
+                self.value != other.value
+            return result
+
+
+    def __lt__(self, other) -> bool:
+        if isinstance(other, Pair):
+            result = self.axis < other.axis and \
+                self.speed < other.speed and \
+                self.rest_current < other.rest_current and \
+                self.move_current < other.move_current and \
+                self.length < other.length and \
+                self.value < other.value
+            return result
+
+
+    def __gt__(self, other) -> bool:
+        if isinstance(other, Pair):
+            result = self.axis > other.axis and \
+                self.speed > other.speed and \
+                self.rest_current > other.rest_current and \
+                self.move_current > other.move_current and \
+                self.length > other.length and \
+                self.value > other.value
+            return result
+
+
+    def __le__(self, other) -> bool:
+        if isinstance(other, Pair):
+            result = self.axis <= other.axis and \
+                self.speed <= other.speed and \
+                self.rest_current <= other.rest_current and \
+                self.move_current <= other.move_current and \
+                self.length <= other.length and \
+                self.value <= other.value
+            return result
+
+
+    def __ge__(self, other) -> bool:
+        if isinstance(other, Pair):
+            result = self.axis >= other.axis and \
+                self.speed >= other.speed and \
+                self.rest_current >= other.rest_current and \
+                self.move_current >= other.move_current and \
+                self.length >= other.length and \
+                self.value >= other.value
+            return result
+
+
     def __str__(self) -> str:
         return f"({self.axis.name})--{self.length}(мм)--"
 

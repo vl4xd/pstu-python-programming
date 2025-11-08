@@ -44,5 +44,29 @@ class SlidingPair(Pair):
                 ])
 
 
+    def __eq__(self, other):
+            return super().__eq__(other)
+
+
+    def __ne__(self, other):
+        return super().__ne__(other)
+
+
+    def __lt__(self, other):
+        return super().__lt__(other)
+
+
+    def __gt__(self, other):
+        return super().__gt__(other)
+
+
+    def __le__(self, other):
+        return super().__le__(other)
+
+
+    def __ge__(self, other):
+        return super().__ge__(other)
+
+
     def __str__(self) -> str:
         return "⭡" + super().__str__()
