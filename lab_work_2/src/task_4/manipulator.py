@@ -9,6 +9,7 @@ class Manipulator:
     def __init__(self) -> None:
         self.pairs: list[Pair] = []
         self.positions: list[list[np.array]] = []
+        self.work_times: list[list[int]] = []
         self.is_have_initial_position: bool = False
 
 
@@ -38,6 +39,40 @@ class Manipulator:
                 [0, 0, 1, lenght],
                 [0, 0, 0, 1]
             ])
+
+
+    def forward_kinematics(self, work_time_set: list[int]) -> None:
+        """_summary_
+
+        :param list[int] work_time_set: время работы каждой пары (сек)
+        """
+        if len(work_time_set) != len(self.pairs):
+            raise ValueError("Длина work_time_set должна быть равна количеству пар манипулятора.")
+
+        # Добавляем к временам работы предыдущие времена работы (накопление времени)
+        if len(self.work_times) != 0:
+            work_time_set = [work_time_set[i] + t for i, t in enumerate(self.work_times[-1])]
+
+        # Производи вычисления начальной позиции манипулятора
+        if not self.is_have_initial_position:
+            self.is_have_initial_position = True
+            self.forward_kinematics([0 for _ in self.pairs])
+
+        # Начальная точка (база)
+        T = np.eye(4)  # Единичная матрица
+        points = [T @ np.array([0, 0, 0, 1])]  # База
+
+        for i, pair in enumerate(self.pairs):
+            T = T @ pair.get_matrix(work_time_set[i])
+
+            if pair.length != 0:
+                T = T @ self.get_translation_matrix(pair.length)
+
+            points.append(T @ np.array([0, 0, 0, 1]))
+
+        self.positions.append(points)
+        self.work_times.append(work_time_set)
+        return points
 
 
     def visualize_manipulator(self) -> None:
@@ -102,35 +137,6 @@ class Manipulator:
         )
 
         fig.show()
-
-
-    def forward_kinematics(self, work_time_set: list[int]) -> None:
-        """_summary_
-
-        :param list[int] work_time_set: время работы каждой пары (сек)
-        """
-        if len(work_time_set) != len(self.pairs):
-            raise ValueError("Длина work_time_set должна быть равна количеству пар манипулятора.")
-
-        # Производи вычисления начальной позиции манипулятора
-        if not self.is_have_initial_position:
-            self.is_have_initial_position = True
-            self.forward_kinematics([0 for _ in self.pairs])
-
-        # Начальная точка (база)
-        T = np.eye(4)  # Единичная матрица
-        points = [T @ np.array([0, 0, 0, 1])]  # База
-
-        for i, pair in enumerate(self.pairs):
-            T = T @ pair.get_matrix(work_time_set[i])
-
-            if pair.length != 0:
-                T = T @ self.get_translation_matrix(pair.length)
-
-            points.append(T @ np.array([0, 0, 0, 1]))
-
-        self.positions.append(points)
-        return points
 
 
     def __str__(self):
