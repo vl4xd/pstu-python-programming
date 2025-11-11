@@ -2,6 +2,9 @@ import numpy as np
 import plotly.graph_objects as go
 
 from .pair import Pair
+from .rotating_pair import RotatingPair
+from .sliding_pair import SlidingPair
+from .axis_type import AxisType
 
 class Manipulator:
 
@@ -11,9 +14,16 @@ class Manipulator:
         self.positions: list[list[np.array]] = []
         self.work_times: list[list[int]] = []
         self.is_have_initial_position: bool = False
+        self.main_axis = AxisType.Z
 
 
     def add_pair(self, pair: Pair) -> None:
+        if self.is_have_initial_position:
+            raise RuntimeError("К уже работающему манипулятору невозможно добавить новую кинематическую пару. Инициализируйте новый манипулятор, либо примените 'clear_positions' или 'clear_pairs'")
+
+        if isinstance(pair, RotatingPair):
+            if pair.axis is self.main_axis:
+                raise ValueError(f"Невозможно добавить данную ротационную кинематическую пару, поскольку ее ось вращения {pair.axis} совпадает с основной осью манипулятора {self.main_axis}")
         self.pairs.append(pair)
 
 
@@ -29,16 +39,32 @@ class Manipulator:
 
 
     def get_translation_matrix(self, lenght: int) -> np.array:
-        """Матрица длины звена (всегда вдоль оси X)
+        """Матрица длины звена (всегда вдоль оси опорной оси Z)
 
         :return np.array: _description_
         """
-        return np.array([
-                [1, 0, 0, 0],
-                [0, 1, 0, 0],
-                [0, 0, 1, lenght],
-                [0, 0, 0, 1]
-            ])
+        match self.main_axis:
+            case AxisType.X:
+                return np.array([
+                        [1, 0, 0, lenght],
+                        [0, 1, 0, 0],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1]
+                    ])
+            case AxisType.Y:
+                return np.array([
+                        [1, 0, 0, 0],
+                        [0, 1, 0, lenght],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1]
+                    ])
+            case AxisType.Z:
+                return np.array([
+                        [1, 0, 0, 0],
+                        [0, 1, 0, 0],
+                        [0, 0, 1, lenght],
+                        [0, 0, 0, 1]
+                    ])
 
 
     def forward_kinematics(self, work_time_set: list[int]) -> None:
@@ -75,7 +101,18 @@ class Manipulator:
         return points
 
 
-    def visualize_manipulator(self) -> None:
+    def get_pairs_names(self) -> list[str]:
+        pairs_names = []
+        for i, pair in enumerate(self.pairs):
+            if isinstance(pair, RotatingPair):
+                pairs_names.append(f'Вращательная пара {i + 1}')
+            if isinstance(pair, SlidingPair):
+                pairs_names.append(f"Поступательная пара {i + 1}")
+        pairs_names.append('Схват')
+        return pairs_names
+
+
+    def visualize_manipulator(self, width: int = 800, height: int = 800) -> None:
         data = []
 
         # Для центрирования графика и фиксации масштаба на самое бОльшее значение
@@ -84,19 +121,34 @@ class Manipulator:
         all_z = []
 
         for i, i_positions in enumerate(self.positions):
+
             visible = False
             if i == 0:
                 visible = True
             x_positions = [p[0] for p in i_positions]
             y_positions = [p[1] for p in i_positions]
             z_positions = [p[2] for p in i_positions]
+            colors = ['red' if j == len(i_positions) - 1 else 'green' for j in range(len(i_positions))]
 
             all_x.extend(x_positions)
             all_y.extend(y_positions)
             all_z.extend(z_positions)
 
-            data.append(go.Scatter3d(visible=visible, x=x_positions, y=y_positions, z=z_positions, mode="lines+markers"))
-        #
+            data.append(go.Scatter3d(
+                visible=visible,
+                x=x_positions,
+                y=y_positions,
+                z=z_positions,
+                mode="lines+markers",
+                marker=dict(
+                    color=colors,
+                    size=10),
+                line=dict(
+                    color='gray',
+                    width=5
+                ),
+                text=self.get_pairs_names()))
+
         max_range = max(max(all_x) - min(all_x),
                        max(all_y) - min(all_y),
                        max(all_z) - min(all_z))
@@ -120,9 +172,12 @@ class Manipulator:
 
         # Фиксируем масштаб осей
         fig.update_layout(
-            width=800,
-            height=800,
+            width=width,
+            height=height,
             sliders=sliders,
+            title={
+                'text': 'Визуализация манипулятора',
+            },
             scene=dict(
                 xaxis=dict(range=[mid_x - max_range * 0.5, mid_x + max_range * 0.5]),
                 yaxis=dict(range=[mid_y - max_range * 0.5, mid_y + max_range * 0.5]),
