@@ -44,6 +44,14 @@ class SlidingPair(Pair):
                 ])
 
 
+    def __mul__(self, other):
+        return super().__mul__(other)
+
+
+    def __rmul__(self, other):
+        return super().__rmul__(other)
+
+
     def __eq__(self, other):
             return super().__eq__(other)
 

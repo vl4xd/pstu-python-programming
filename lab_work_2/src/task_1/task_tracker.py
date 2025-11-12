@@ -1,4 +1,4 @@
-from task import Task
+from .task import Task
 
 class TaskTracker:
 
@@ -25,7 +25,7 @@ class TaskTracker:
         categories: set[str] = set()
 
         for task in self._tasks.values():
-            categories.add(task._categoty)
+            categories.add(task._category)
 
         return categories
 
@@ -41,7 +41,6 @@ class TaskTracker:
     def str_sorted_by_date(self, reverse: bool = False, unfinished: bool = True, finished: bool = True) -> str:
 
         string_instance = f"Список задач (Время {self._str_sort_tag(reverse)}):\n"
-
         sorted_tasks = dict(sorted(self._tasks.items(), key=lambda item: item[0], reverse=reverse))
 
         for id, task in sorted_tasks.items():

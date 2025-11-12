@@ -28,6 +28,24 @@ class Pair(Servo):
         pass
 
 
+    def __mul__(self, other):
+        """Использовать для умножение на время работы в секундах
+
+        :param _type_ other: _description_
+        """
+        if isinstance(other, (int, float)):
+            if other == 0:
+                return self.rest_current
+            # Берем модуль если, поскольку может быть отрицательное значене, показывающее движение в обратную сторону
+            abs_other = abs(other)
+            return abs_other * self.move_current
+
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+
+
     def __eq__(self, other) -> bool:
         if isinstance(other, Pair):
             result = self.axis == other.axis and \

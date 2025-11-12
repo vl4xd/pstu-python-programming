@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from transaction_type import TransactionType
+from .transaction_type import TransactionType
 
 class Transaction:
 

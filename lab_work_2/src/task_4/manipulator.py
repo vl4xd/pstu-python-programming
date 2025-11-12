@@ -1,5 +1,6 @@
 import numpy as np
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 from .pair import Pair
 from .rotating_pair import RotatingPair
@@ -13,6 +14,7 @@ class Manipulator:
         self.pairs: list[Pair] = []
         self.positions: list[list[np.array]] = []
         self.work_times: list[list[int]] = []
+        self.work_currents: list[list[int]] = []
         self.is_have_initial_position: bool = False
         self.main_axis = AxisType.Z
 
@@ -20,21 +22,21 @@ class Manipulator:
     def add_pair(self, pair: Pair) -> None:
         if self.is_have_initial_position:
             raise RuntimeError("К уже работающему манипулятору невозможно добавить новую кинематическую пару. Инициализируйте новый манипулятор, либо примените 'clear_positions' или 'clear_pairs'")
-
-        if isinstance(pair, RotatingPair):
-            if pair.axis is self.main_axis:
-                raise ValueError(f"Невозможно добавить данную ротационную кинематическую пару, поскольку ее ось вращения {pair.axis} совпадает с основной осью манипулятора {self.main_axis}")
         self.pairs.append(pair)
 
 
     def clear_pairs(self) -> None:
         self.pairs.clear()
         self.positions.clear()
+        self.work_times = []
+        self.work_currents = []
         self.is_have_initial_position = False
 
 
     def clear_positions(self) -> None:
         self.positions.clear()
+        self.work_times = []
+        self.work_currents = []
         self.is_have_initial_position = False
 
 
@@ -98,6 +100,8 @@ class Manipulator:
 
         self.positions.append(points)
         self.work_times.append(work_time_set)
+        # Вычисление тока потребления манипулятора
+        self.work_currents.append(list(map(lambda t, p: t * p, work_time_set, self.pairs)))
         return points
 
 

@@ -19,9 +19,11 @@ class Category:
                 return True
             return False
 
+    def __str_limit(self) -> str:
+        return f"(затрат в месяц не более {self._limit // 100} руб. {self._limit % 100} коп.)"
 
     def __str__(self):
-        return f"{self._name}"
+        return f"{self._name} {self.__str_limit()}"
 
 
     def __repr__(self):
