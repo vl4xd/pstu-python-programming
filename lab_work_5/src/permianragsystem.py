@@ -10,7 +10,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 class PermianRAGSystem:
 
-    def __init__(self, vectorstore: Chroma, llm_model: str = "llama3.2"):
+    def __init__(self, vectorstore: Chroma, llm_model: str = "gemma3:4b", k: int = 5):
         self.vectorstore: Chroma = vectorstore
         self.llm = OllamaLLM(model=llm_model,
                              base_url="http://localhost:11434",
@@ -25,13 +25,14 @@ Provide an answer in Russian!
 Context: {context}
 Question: {question}
 Detailed Answer:"""
+        self.k = k
+        self.retriever = vectorstore.as_retriever(search_kwargs={"k": self.k})
+        self.prompt = ChatPromptTemplate.from_template(self.prompt_template)
+        # LCEL (LangChain Expression Language)
+        self.rag_chain = ({"context": self.retriever, "question": RunnablePassthrough()} | self.prompt | self.llm | StrOutputParser())
+
         # self.prompt = PromptTemplate(template=self.prompt_template,
         #                              input_variables=["context", "question"])
-        self.retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
-
-        self.prompt = ChatPromptTemplate.from_template(self.prompt_template)
-
-        self.rag_chain = ({"context": self.retriever, "question": RunnablePassthrough()} | self.prompt | self.llm | StrOutputParser())
 
         # self.qa_chain = RetrievalQA.from_chain_type(llm=self.llm,
         #                                             chain_type="stuff",
@@ -40,11 +41,27 @@ Detailed Answer:"""
         #                                             chain_type_kwargs={"prompt": self.prompt},
         #                                             verbose=False)
 
+    def search_in_vectorstore(self, question: str) -> dict:
+
+        docs_with_scores = self.vectorstore.similarity_search_with_score(question, self.k)
+
+        return {
+            "question": question,
+            "docs": sorted([
+                {
+                    "id": doc.id,
+                    "source": doc.metadata.get('source', 'Unknown'),
+                    "content": doc.page_content[:300],
+                    "score": score
+                } for doc, score in docs_with_scores], key=lambda x: x['score'], reverse=True)
+        }
+
     def answer_question(self, question: str) -> dict:
         # result = self.qa_chain.invoke({"query": question})
 
         # Получаем контекст для источников
         context_docs = self.retriever.invoke(question)
+
         # Полный ответ
         answer = self.rag_chain.invoke(question)
 

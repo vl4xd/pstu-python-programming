@@ -6,7 +6,7 @@ import shutil
 
 class VectorStoreBuilder:
 
-    def __init__(self, model: str = "nomic-embed-text", persist_dir: str = "./chroma_db"):
+    def __init__(self, model: str = "zylonai/multilingual-e5-large:latest", persist_dir: str = "./chroma_db"):
         self.model = model
         self.persist_dir = persist_dir
         self.vectorstore = None
