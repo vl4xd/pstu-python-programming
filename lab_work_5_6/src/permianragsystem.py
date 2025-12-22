@@ -14,7 +14,7 @@ class PermianRAGSystem:
         self.vectorstore: Chroma = vectorstore
         self.llm = OllamaLLM(model=llm_model,
                              base_url="http://localhost:11434",
-                             temperature=0.3,
+                             temperature=0.4,
                              top_p=0.9,
                              num_predict=512)
         self.prompt_template = """
